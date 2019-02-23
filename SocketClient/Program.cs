@@ -30,6 +30,7 @@ namespace SocketClient
                         if (commands.Length != 3)
                         {
                             Console.WriteLine("use(string ip, int port)");
+                            continue;
                         }
                         if (socket == null)
                         {
@@ -56,22 +57,23 @@ namespace SocketClient
                         if (socket == null)
                         {
                             Console.WriteLine("socket not connect");
+                            continue;
                         }
                         else if (!socket.Connected)
                         {
                             Console.WriteLine("socket not connect");
+                            continue;
                         }
                         else if (commands.Length != 2)
                         {
                             Console.WriteLine("use(string data)");
+                            continue;
                         }
-                        else
-                        {
-                            socket.Send(HexStringToByteArray(commands[1].ToUpper()));
-                            int receiveLength = socket.Receive(buffer);
-                            data = ResizeBufferToData(buffer, receiveLength);
-                            Console.WriteLine(ByteToHexString(data));
-                        }
+
+                        socket.Send(HexStringToByteArray(commands[1].ToUpper()));
+                        int receiveLength = socket.Receive(buffer);
+                        data = ResizeBufferToData(buffer, receiveLength);
+                        Console.WriteLine(ByteToHexString(data));
                     }
                 }
                 catch (Exception e)
